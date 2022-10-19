@@ -1,16 +1,23 @@
 import styled from "styled-components"
-import imgUser from "../img/Logo.jpg"
-
+import { useContext } from "react"
+import { AuthContext } from "../contexts/Auth"
+import { Link } from "react-router-dom"
 
 export default function Header(){
+
+    const {user} = useContext(AuthContext)
+
+
     return(
         <>
-            <Container>
+            <Container>    
+                <Link to="/">   
                 <TextLogo>
                     trackit
                 </TextLogo>
+                </Link>  
                 <ImgUser>
-                    <img src={imgUser}/>
+                    <img src={user.image}/>
                 </ImgUser>
             </Container>
         </>
@@ -25,6 +32,9 @@ background-color: #126BA5;
 width: 100%;
 height: 70px;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+position: fixed;
+top:0;
+left: 0;
 `
 const TextLogo = styled.div`
 font-family: 'Playball', cursive;

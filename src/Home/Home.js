@@ -1,9 +1,10 @@
 import axios from "axios"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../img/Logo.jpg"
 import gif from "../img/cartoon-snail-loading-loading-gif-animation_2734139.gif"
+import { AuthContext } from "../contexts/Auth"
 
 export default function Home() {
 
@@ -11,6 +12,7 @@ export default function Home() {
     const [senha, setSenha] = useState("")
     const [token, setToken] = useState("")
     const [loading, setLoading] = useState(false)
+    const {setUser} = useContext(AuthContext)
 
     const navigate = useNavigate()
 
@@ -44,8 +46,11 @@ export default function Home() {
     }
 
     function deuCerto(resp) {
+        console.log(resp)
+        setUser(resp.data)
         setToken(resp.data.token)
         setLoading(false)
+        navigate('/hoje')
     }
 
     function deuErrado(error) {
@@ -53,9 +58,6 @@ export default function Home() {
         setLoading(false)
         if (error === 422) {
             alert("Sua senha ou email é inválida")
-        }
-        if (error === 409) {
-            alert("Usuário ja cadastrado")
         }
     }
 
@@ -67,7 +69,7 @@ export default function Home() {
                 </Logo>
                 <CamposLogin>
                     <input placeholder="E-mail" onChange={(e) => setEmail(e.target.value)}></input>
-                    <input placeholder="Senha" onChange={(e) => setSenha(e.target.value)}></input>
+                    <input placeholder="Senha" type="password" onChange={(e) => setSenha(e.target.value)}></input>
                     <div className="login" onClick={() => Post()}>
                         {loading ? <img src={gif} /> : "Entrar"}
                     </div>
