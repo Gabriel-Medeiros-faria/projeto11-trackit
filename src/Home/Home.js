@@ -10,9 +10,8 @@ export default function Home() {
 
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
-    const [token, setToken] = useState("")
     const [loading, setLoading] = useState(false)
-    const {setUser} = useContext(AuthContext)
+    const {setUser, token, setToken} = useContext(AuthContext)
 
     const navigate = useNavigate()
 
@@ -49,6 +48,7 @@ export default function Home() {
         console.log(resp)
         setUser(resp.data)
         setToken(resp.data.token)
+        console.log(resp.data.token)
         setLoading(false)
         navigate('/hoje')
     }

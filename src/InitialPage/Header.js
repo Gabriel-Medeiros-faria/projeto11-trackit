@@ -7,7 +7,6 @@ export default function Header(){
 
     const {user} = useContext(AuthContext)
 
-
     return(
         <>
             <Container>    
@@ -17,7 +16,7 @@ export default function Header(){
                 </TextLogo>
                 </Link>  
                 <ImgUser>
-                    <img src={user.image}/>
+                    <img src={user?.image}/>
                 </ImgUser>
             </Container>
         </>
@@ -35,6 +34,7 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 position: fixed;
 top:0;
 left: 0;
+z-index: 100000;
 `
 const TextLogo = styled.div`
 font-family: 'Playball', cursive;
