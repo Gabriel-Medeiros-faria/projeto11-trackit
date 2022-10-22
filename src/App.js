@@ -5,10 +5,12 @@ import GlobalStyled from "../src/Globalstyle/globalstyled"
 import ToDayPage from "./InitialPage/ToDayPage"
 import AuthProvider from "./contexts/Auth";
 import Habitos from "./InitialPage/Hábitos";
+import styled from "styled-components";
 
 function App() {
   return (
     <>
+    
       <BrowserRouter>
       <GlobalStyled/>
       <AuthProvider>
@@ -20,8 +22,10 @@ function App() {
         </Routes>
         </AuthProvider>
       </BrowserRouter>
+      
     </>
   )
 }
+
 
 export default App;

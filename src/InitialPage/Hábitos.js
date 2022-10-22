@@ -14,13 +14,15 @@ export default function Habitos() {
     const daysList = ["D", "S", "T", "Q", "Q", "S", "S"]
     const [arrayDaysSelected, setArrayDaysSelected] = useState([])
     const [valorInput, setValorInput] = useState("")
+
     const { token } = useContext(AuthContext)
+
     const [loading, setLoading] = useState(false)
     const [arrayRespServer, setArrayRespServer] = useState([])
     const [openCreateHabit, setOpenCreateHabit] = useState(false)
 
     function post() {
-        if (valorInput !== "" || arrayDaysSelected !== []) {
+        if (valorInput !== "" && arrayDaysSelected.length !== 0) {
             const config = {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -36,6 +38,9 @@ export default function Habitos() {
             promisse.then((resp) => deuCerto(resp))
             promisse.catch((error) => deuErrado(error))
         }
+        else {
+            alert("coloque o nome do hábito e o(s) dia(s)")
+        }
     }
 
 
@@ -43,6 +48,7 @@ export default function Habitos() {
         setLoading(false)
         setValorInput("")
         setArrayDaysSelected([])
+        setOpenCreateHabit(false)
     }
 
 
@@ -69,31 +75,28 @@ export default function Habitos() {
         }, [arrayRespServer])
     }
     ObjServer()
-
-
     function FuncionouObjServer(resp) {
         setArrayRespServer(resp)
     }
 
 
     function ListDays(days) {
-        
-    const htmlDays = daysList.map((d, index)=>{
-        if(days.includes(index)){
-            return <div className="daySelected">
-            {daysList[index]}
-        </div>
-        }
-        else{
-            return(
-            <div className="day">
-            {daysList[index]}
-        </div>)
-            
-        }
+
+        const htmlDays = daysList.map((d, index) => {
+            if (days.includes(index)) {
+                return <div className="daySelected">
+                    {daysList[index]}
+                </div>
+            }
+            else {
+                return (
+                    <div className="day">
+                        {daysList[index]}
+                    </div>)
+
+            }
         })
         return htmlDays
-
     }
 
     function SelecionarDias(index) {
@@ -106,24 +109,29 @@ export default function Habitos() {
         }
     }
 
-    function DelHabits(id){
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`
+    function DelHabits(id) {
+        //eslint-disable-next-line no-restricted-globals
+        const confirmated = confirm("Deseja realmente excluir?")
+        if (confirmated) {
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             }
+            const promisse = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
         }
-        const promisse = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
     }
+
     return (
         <>
             <Header />
             <Container>
                 <TopPage>
                     <h1>Meus hábitos</h1>
-                    <p onClick={()=> setOpenCreateHabit(true)}>+</p>
+                    <p onClick={() => setOpenCreateHabit(true)}>+</p>
                 </TopPage>
                 <HabitsList>
-                    {openCreateHabit?<CreateHabitBox>
+                    {openCreateHabit ? <CreateHabitBox>
                         <input placeholder="nome do hábito" onChange={(e) => setValorInput(e.target.value)}></input>
                         <div className="days">
                             {daysList.map((d, index) => arrayDaysSelected.includes(index)
@@ -139,37 +147,35 @@ export default function Habitos() {
 
                         </div>
                         <div className="finish">
-                            <p className="cancel" onClick={()=>setOpenCreateHabit(false)}>Cancelar</p>
+                            <p className="cancel" onClick={() => setOpenCreateHabit(false)}>Cancelar</p>
                             <p className="save" onClick={() => post()}>{loading ? <img src={gif} /> : "Salvar"}</p>
                         </div>
-                    </CreateHabitBox>:""}
-                    {arrayRespServer.length === 0 ? <TextNone>"Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"</TextNone> :<HabitBox>
-                        {arrayRespServer.map((obj, index) => {
-                            return (
-                                <>
-                                    <BigBox>
-                                        <p>{obj.name}</p>
-                                        <div className="days">
-                                        {ListDays(obj.days)}
-                                        </div>
-                                        <img src={trash} onClick={()=> DelHabits(obj.id)}/>
-                                    </BigBox>
-                                </>
-                            )
-                        })
-                        }
-                    </HabitBox>}
-                    
+                    </CreateHabitBox> : ""}
+                    {arrayRespServer.length === 0 ? <TextNone>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</TextNone> :
+                        <HabitBox>
+                            {arrayRespServer.map((obj, index) => {
+                                return (
+                                    <>
+                                        <BigBox>
+                                            <p>{obj.name}</p>
+                                            <div className="days">
+                                                {ListDays(obj.days)}
+                                            </div>
+                                            <img src={trash} onClick={() => DelHabits(obj.id)} />
+                                        </BigBox>
+                                    </>
+                                )
+                            })
+                            }
+                        </HabitBox>}
                 </HabitsList>
-
-
             </Container>
+
             <Float />
         </>
     )
 }
 const Container = styled.div`
-background-color: #E5E5E5;
 margin-top: 70px;
 margin-bottom: 70px;
 height: 100%;
@@ -211,6 +217,7 @@ height: 180px;
 background-color: #FFFFFF;
 border-radius: 5px;
 padding: 19px;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 input{
     border-color: #D4D4D4;
     font-family: 'Lexend Deca';
@@ -280,7 +287,6 @@ img{
 }
 `
 const HabitBox = styled.div`
-
 `
 const BigBox = styled.div`
 width: 340px;
@@ -290,6 +296,7 @@ border-radius: 5px;
 margin-top: 10px;
 padding-left: 20px;
 position: relative;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 p{
     font-family: 'Lexend Deca';
     font-size: 19.98px;
@@ -337,6 +344,7 @@ right: 7px;
 }
 `
 const TextNone = styled.div`
+margin-top: 10px;
 font-family:'Lexend Deca';
 font-size:17.98px;
 font-weight: 400;
