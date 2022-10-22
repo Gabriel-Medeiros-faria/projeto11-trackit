@@ -289,7 +289,7 @@ img{
 const HabitBox = styled.div`
 `
 const BigBox = styled.div`
-width: 340px;
+width: 100%;
 height: 91px;
 background-color: #FFFFFF;
 border-radius: 5px;
