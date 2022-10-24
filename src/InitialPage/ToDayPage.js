@@ -53,7 +53,6 @@ export default function ToDayPage() {
                 "Authorization": `Bearer ${token}`
             }
         }
-        console.log(token)
             const promisse = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, id,  config)
             promisse.then((resp)=>SelectedHabitRight(id))
             promisse.catch((error)=>console.log(error))
@@ -85,7 +84,7 @@ function DeletedHabit(id){
             <Container>
                 <TopPage>
                     <h1>{dia}</h1>
-                    {arraySelected.length === 0?
+                    {arraySelected.length === 0 || habits.length === 0?
                     <p>Nenhum hábito concluído ainda</p>
                     :
                     <p className="green">{percent}% dos hábitos concluídos </p>}

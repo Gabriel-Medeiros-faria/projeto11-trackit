@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar"
 import { useContext, useEffect, useState } from "react"
 import {AuthContext} from "../contexts/Auth"
+import 'react-circular-progressbar/dist/styles.css';
 
 export default function Float() {
 
@@ -11,7 +12,6 @@ export default function Float() {
     
 
     useEffect(()=>{
-        console.log(percent)
         const newPercent = percent
         setNewPercent(newPercent)
     },[percent])
@@ -29,7 +29,7 @@ export default function Float() {
                     <DivCircle>
                     <CircularProgressbarWithChildren
                             value={newPercent}
-                            text={''}
+                            text={'Hoje'}
                             background
                             backgroundPadding={6}
                             styles={buildStyles({
@@ -38,7 +38,6 @@ export default function Float() {
                             pathColor: "#fff",
                             trailColor: "transparent"
                             })}/>
-                            <p>Hoje</p>
                     </DivCircle>
                 </Link>
 

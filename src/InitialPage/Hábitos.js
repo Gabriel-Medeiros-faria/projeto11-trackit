@@ -53,7 +53,6 @@ export default function Habitos() {
 
 
     function deuErrado(error) {
-        console.log(error)
         setLoading(false)
         alert("foi não menó")
     }
