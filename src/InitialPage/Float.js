@@ -21,14 +21,14 @@ export default function Float() {
             <Container>
                 <Link to="/habitos">
                 <div className="hábitos">
-                    <p>Hábitos</p>
+                    <p data-identifier="habit-page-action">Hábitos</p>
                 </div>
                 </Link>
                 
                 <Link to="/hoje">
                     <DivCircle>
                     <CircularProgressbarWithChildren
-                            value={newPercent}
+                            value={percent}
                             text={'Hoje'}
                             background
                             backgroundPadding={6}
@@ -43,7 +43,7 @@ export default function Float() {
 
                 <Link to="/histórico">
                 <div className="histórico">
-                    <p>Histórico</p>
+                    <p data-identifier="historic-page-action">Histórico</p>
                 </div>
                 </Link>
             </Container>

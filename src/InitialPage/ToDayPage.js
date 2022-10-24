@@ -83,15 +83,15 @@ function DeletedHabit(id){
             <Header />
             <Container>
                 <TopPage>
-                    <h1>{dia}</h1>
+                    <h1 data-identifier="today-infos">{dia}</h1>
                     {arraySelected.length === 0 || habits.length === 0?
                     <p>Nenhum hábito concluído ainda</p>
                     :
-                    <p className="green">{percent}% dos hábitos concluídos </p>}
+                    <p className="green" data-identifier="today-infos">{percent}% dos hábitos concluídos </p>}
                 </TopPage>
                 <TaskList>
                     {habits.map((obj, index)=>
-                    <TaskBox>
+                    <TaskBox data-identifier="today-infos">
                     <div className="texts">
                         <h2>{obj.name}</h2>
                         {obj.currentSequence > 0 && obj.highestSequence > 0 && obj.currentSequence === obj.highestSequence?
@@ -105,9 +105,9 @@ function DeletedHabit(id){
                         
                     </div>
                     {obj.done?<div className="checkSelected" onClick={()=> DeletedHabit(obj.id)}>
-                        <img src={Check}/>
+                        <img src={Check} data-identifier="done-habit-btn"/>
                     </div>:<div className="check" onClick={()=> SelectedHabit(obj.id)}>
-                        <img src={Check} />
+                        <img src={Check} data-identifier="done-habit-btn"/>
                     </div>}                    
                     </TaskBox>
                     )}
@@ -142,6 +142,7 @@ p{
     color: #BABABA;
     font-family: 'Lexend Deca';
 }
+.green{color: #8fc549;}
 `
 
 const TaskList = styled.div`

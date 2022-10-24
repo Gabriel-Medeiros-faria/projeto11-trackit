@@ -16,7 +16,7 @@ export default function Header(){
                 </TextLogo>
                 </Link>  
                 <ImgUser>
-                    <img src={user?.image}/>
+                    <img src={user?.image} data-identifier="avatar"/>
                 </ImgUser>
             </Container>
         </>

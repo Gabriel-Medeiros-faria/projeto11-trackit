@@ -12,6 +12,7 @@ export default function Home() {
     const [senha, setSenha] = useState("")
     const [loading, setLoading] = useState(false)
     const {setUser, token, setToken} = useContext(AuthContext)
+    const [disabledInput, setDisabled] = useState(false)
 
     const navigate = useNavigate()
 
@@ -31,6 +32,7 @@ export default function Home() {
 
             const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body, config)
             setLoading(true)
+            setDisabled(true)
             promisse.then((resp) => deuCerto(resp))
             promisse.catch((error) => deuErrado(error.response.status))
 
@@ -45,16 +47,16 @@ export default function Home() {
     }
 
     function deuCerto(resp) {
-        console.log(resp)
+        setDisabled(false)
         setUser(resp.data)
         setToken(resp.data.token)
-        console.log(resp.data.token)
         setLoading(false)
         navigate('/hoje')
     }
 
     function deuErrado(error) {
         console.log(error)
+        setDisabled(false)
         setLoading(false)
         if (error === 422) {
             alert("Sua senha ou email é inválida")
@@ -68,14 +70,14 @@ export default function Home() {
                     <img src={logo} />
                 </Logo>
                 <CamposLogin>
-                    <input placeholder="E-mail" onChange={(e) => setEmail(e.target.value)}></input>
-                    <input placeholder="Senha" type="password" onChange={(e) => setSenha(e.target.value)}></input>
-                    <div className="login" onClick={() => Post()}>
+                    <input placeholder="E-mail" onChange={(e) => setEmail(e.target.value)} disabled={disabledInput}  data-identifier="input-email"></input>
+                    <input placeholder="Senha" type="password" onChange={(e) => setSenha(e.target.value)} disabled={disabledInput} data-identifier="input-password"></input>
+                    <div className="login" onClick={() => Post() } disabled={disabledInput} data-identifier="login-btn">
                         {loading ? <img src={gif} /> : "Entrar"}
                     </div>
                 </CamposLogin>
                 <Link to="/cadastro">
-                    <Cadastro>
+                    <Cadastro data-identifier="sign-up-action">
                         Não tem uma conta? Cadastre-se
                     </Cadastro>
                 </Link>

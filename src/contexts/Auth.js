@@ -8,7 +8,7 @@ function AuthProvider({children}){
     const [token, setToken] = useState("")
     const [habits, setHabits] = useState([])
     const [arraySelected, setArraySelected] = useState([])
-    const [percent , setPercent]=useState(0)
+    const [percent , setPercent] = useState(0)
     return(
         <AuthContext.Provider value={{setUser, user, setToken, token, habits, setHabits, arraySelected, setArraySelected, percent, setPercent}}>
             {children}

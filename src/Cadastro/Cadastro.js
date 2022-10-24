@@ -14,7 +14,7 @@ export default function Cadastro(){
     const navigate = useNavigate()
     const[loading, setLoading] = useState(false)
     const[disabledInput, setDisabledInput] = useState(false)
-
+    
     function Post(){
 
         if(email !== "" || senha !== "" || nome !== "" || foto !== ""){
@@ -71,16 +71,16 @@ export default function Cadastro(){
                     <img src={logo}/>
                 </Logo>
                 <CamposLogin>
-                    <input placeholder="E-mail" onChange={(e)=> setEmail(e.target.value)} disabled={disabledInput}></input>
-                    <input placeholder="Senha" onChange={(e)=> setSenha(e.target.value)} disabled={disabledInput}></input>
-                    <input placeholder="Nome" onChange={(e)=> setNome(e.target.value)} disabled={disabledInput}></input>
-                    <input placeholder="Foto" onChange={(e)=> setFoto(e.target.value)} disabled={disabledInput}></input>
+                    <input placeholder="E-mail" onChange={(e)=> setEmail(e.target.value)} disabled={disabledInput} data-identifier="input-email"></input>
+                    <input placeholder="Senha" onChange={(e)=> setSenha(e.target.value)} disabled={disabledInput} data-identifier="input-password"></input>
+                    <input placeholder="Nome" onChange={(e)=> setNome(e.target.value)} disabled={disabledInput} data-identifier="input-name"></input>
+                    <input placeholder="Foto" onChange={(e)=> setFoto(e.target.value)} disabled={disabledInput} data-identifier="input-photo"></input>
                     <div className="login" onClick={() => Post()} disabled={disabledInput}>
                         {loading ? <img src={gif}/> : "Cadastrar" }
                     </div>
                 </CamposLogin>
                 <Link to="/">
-                <Cad>
+                <Cad data-identifier="back-to-login-action">
                     Já tem uma conta? Faça login
                 </Cad>
                 </Link>

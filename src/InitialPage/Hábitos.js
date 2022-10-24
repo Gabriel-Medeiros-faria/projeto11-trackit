@@ -14,12 +14,11 @@ export default function Habitos() {
     const daysList = ["D", "S", "T", "Q", "Q", "S", "S"]
     const [arrayDaysSelected, setArrayDaysSelected] = useState([])
     const [valorInput, setValorInput] = useState("")
-
     const { token } = useContext(AuthContext)
-
     const [loading, setLoading] = useState(false)
     const [arrayRespServer, setArrayRespServer] = useState([])
     const [openCreateHabit, setOpenCreateHabit] = useState(false)
+    const [disabledInput, setDisabled] = useState(false)
 
     function post() {
         if (valorInput !== "" && arrayDaysSelected.length !== 0) {
@@ -35,6 +34,7 @@ export default function Habitos() {
             }
             const promisse = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
             setLoading(true)
+            setDisabled(true)
             promisse.then((resp) => deuCerto(resp))
             promisse.catch((error) => deuErrado(error))
         }
@@ -47,6 +47,7 @@ export default function Habitos() {
     function deuCerto(resp) {
         setLoading(false)
         setValorInput("")
+        setDisabled(false)
         setArrayDaysSelected([])
         setOpenCreateHabit(false)
     }
@@ -55,6 +56,7 @@ export default function Habitos() {
     function deuErrado(error) {
         setLoading(false)
         alert("foi não menó")
+        setDisabled(false)
     }
 
 
@@ -126,31 +128,31 @@ export default function Habitos() {
             <Container>
                 <TopPage>
                     <h1>Meus hábitos</h1>
-                    <p onClick={() => setOpenCreateHabit(true)}>+</p>
+                    <p onClick={() => setOpenCreateHabit(true)} data-identifier="create-habit-btn">+</p>
                 </TopPage>
                 <HabitsList>
                     {openCreateHabit ? <CreateHabitBox>
-                        <input placeholder="nome do hábito" onChange={(e) => setValorInput(e.target.value)}></input>
+                        <input placeholder="nome do hábito" onChange={(e) => setValorInput(e.target.value)} disabled={disabledInput} data-identifier="input-habit-name"></input>
                         <div className="days">
                             {daysList.map((d, index) => arrayDaysSelected.includes(index)
                                 ?
-                                <div className="daySelected" onClick={() => SelecionarDias(index)}>
+                                <div className="daySelected" onClick={() => SelecionarDias(index)} disabled={disabledInput} data-identifier="week-day-btn" >
                                     {d}
                                 </div>
                                 :
-                                <div className="day" onClick={() => SelecionarDias(index)}>
+                                <div className="day" onClick={() => SelecionarDias(index)} disabled={disabledInput} data-identifier="week-day-btn" >
                                     {d}
                                 </div>
                             )}
 
                         </div>
                         <div className="finish">
-                            <p className="cancel" onClick={() => setOpenCreateHabit(false)}>Cancelar</p>
-                            <p className="save" onClick={() => post()}>{loading ? <img src={gif} /> : "Salvar"}</p>
+                            <p className="cancel" onClick={() => setOpenCreateHabit(false)} disabled={disabledInput} data-identifier="cancel-habit-create-btn">Cancelar</p>
+                            <p className="save" onClick={() => post()} disabled={disabledInput} data-identifier="save-habit-create-btn">{loading ? <img src={gif} /> : "Salvar"}</p>
                         </div>
                     </CreateHabitBox> : ""}
                     {arrayRespServer.length === 0 ? 
-                    <TextNone>
+                    <TextNone data-identifier="no-habit-message">
                         Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                         </TextNone> :
                         <HabitBox>
@@ -158,11 +160,11 @@ export default function Habitos() {
                                 return (
                                     <>
                                         <BigBox>
-                                            <p>{obj.name}</p>
+                                            <p data-identifier="habit-name">{obj.name}</p>
                                             <div className="days">
                                                 {ListDays(obj.days)}
                                             </div>
-                                            <img src={trash} onClick={() => DelHabits(obj.id)} />
+                                            <img src={trash} onClick={() => DelHabits(obj.id)} data-identifier="delete-habit-btn"/>
                                         </BigBox>
                                     </>
                                 )
