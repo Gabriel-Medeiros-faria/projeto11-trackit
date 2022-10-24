@@ -93,7 +93,6 @@ export default function Habitos() {
                     <div className="day">
                         {daysList[index]}
                     </div>)
-
             }
         })
         return htmlDays
@@ -151,7 +150,10 @@ export default function Habitos() {
                             <p className="save" onClick={() => post()}>{loading ? <img src={gif} /> : "Salvar"}</p>
                         </div>
                     </CreateHabitBox> : ""}
-                    {arrayRespServer.length === 0 ? <TextNone>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</TextNone> :
+                    {arrayRespServer.length === 0 ? 
+                    <TextNone>
+                        Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                        </TextNone> :
                         <HabitBox>
                             {arrayRespServer.map((obj, index) => {
                                 return (
@@ -212,7 +214,7 @@ const HabitsList = styled.div`
 
 `
 const CreateHabitBox = styled.div`
-width: 340px;
+width: 100%;
 height: 180px;
 background-color: #FFFFFF;
 border-radius: 5px;
@@ -222,7 +224,7 @@ input{
     border-color: #D4D4D4;
     font-family: 'Lexend Deca';
     font-size: 19.98px;
-    width: 303px;
+    width: 100%;
     height: 45px;
     border-radius: 5px;
     margin-bottom: 5px;

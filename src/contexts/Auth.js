@@ -6,25 +6,11 @@ function AuthProvider({children}){
 
     let[user, setUser] = useState()
     const [token, setToken] = useState("")
-    console.log(token)
-
-    useEffect(()=> {
-        const userStorage = localStorage.getItem("user")
-        const userToken = localStorage.getItem("token")
-
-        if(userToken){
-            setUser(JSON.parse(userStorage))
-            setToken(JSON.parse(userToken))
-        }
-        else{
-            setUser("")
-            setToken("")
-        }
-
-    },[])
-
+    const [habits, setHabits] = useState([])
+    const [arraySelected, setArraySelected] = useState([])
+    const [percent , setPercent]=useState(0)
     return(
-        <AuthContext.Provider value={{setUser, user, setToken, token}}>
+        <AuthContext.Provider value={{setUser, user, setToken, token, habits, setHabits, arraySelected, setArraySelected, percent, setPercent}}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,7 +1,21 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar"
+import { useContext, useEffect, useState } from "react"
+import {AuthContext} from "../contexts/Auth"
 
 export default function Float() {
+
+    const {arraySelected, setArraySelected, percent } = useContext(AuthContext)
+    const [newPercent, setNewPercent] = useState([])
+    
+
+    useEffect(()=>{
+        console.log(percent)
+        const newPercent = percent
+        setNewPercent(newPercent)
+    },[percent])
+
     return (
         <>
             <Container>
@@ -10,14 +24,29 @@ export default function Float() {
                     <p>Hábitos</p>
                 </div>
                 </Link>
+                
                 <Link to="/hoje">
-                <div className="hoje">
-                    <p>Hoje</p>
-                </div>
+                    <DivCircle>
+                    <CircularProgressbarWithChildren
+                            value={newPercent}
+                            text={''}
+                            background
+                            backgroundPadding={6}
+                            styles={buildStyles({
+                            backgroundColor: "#52B6FF",
+                            textColor: "#fff",
+                            pathColor: "#fff",
+                            trailColor: "transparent"
+                            })}/>
+                            <p>Hoje</p>
+                    </DivCircle>
                 </Link>
+
+                <Link to="/histórico">
                 <div className="histórico">
                     <p>Histórico</p>
                 </div>
+                </Link>
             </Container>
         </>
     )
@@ -31,34 +60,34 @@ display: flex;
 justify-content: space-around;
 align-items: center;
 position: fixed;
+z-index: 1000;
 bottom: 0;
 left: 0;
-
 
 .hábitos p{
 font-size: 17.98px;
 color: #52B6FF;
 font-family: 'Lexend Deca';
 }
-.hoje{
-    width: 91px;
-    height: 91px;
-    background-color: #52B6FF;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.hoje p{
-font-size: 17.98px;
-color: #FFFFFF;
-font-family: 'Lexend Deca';
-}
+
 .histórico p{
 font-size: 17.98px;
 color: #52B6FF;
 font-family: 'Lexend Deca';
 }
+`
+const DivCircle = styled.div`
+margin-bottom: 50px;
+text-align:center;
+width: 91px;
+height: 91px;
 
+p{
+    position: fixed;
+    bottom: 53px;
+    right: 190px;
+    font-family: 'Lexend Deca';
+    color: #FFFFFF;
+    font-weight: 400;
+}
 `

@@ -6,6 +6,8 @@ import ToDayPage from "./InitialPage/ToDayPage"
 import AuthProvider from "./contexts/Auth";
 import Habitos from "./InitialPage/Hábitos";
 import styled from "styled-components";
+import Histórico from "./InitialPage/Histórico";
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <Route path="/cadastro" element={<Cadastro />}/>
           <Route path="/hoje" element={<ToDayPage/>}/>
           <Route path="/habitos" element={<Habitos/>}/>
+          <Route path="/histórico" element={<Histórico/>}/>
         </Routes>
         </AuthProvider>
       </BrowserRouter>
